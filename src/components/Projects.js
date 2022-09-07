@@ -34,12 +34,12 @@ const Projects = () => {
       imgUrl: projImg4,
     },
     {
-      title: "Business Startup",
-      description: "Design & Development",
+      title: "SpeedTypingGame",
+      description: "Game",
       imgUrl: projImg5,
     },
     {
-      title: "Business Startup",
+      title: "FitnessClubPage",
       description: "Design & Development",
       imgUrl: projImg6,
     },
