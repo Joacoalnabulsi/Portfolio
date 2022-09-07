@@ -1,8 +1,11 @@
 import { Container, Row, Col, Tab, Nav } from "react-bootstrap";
 import  ProjectCard  from "./ProjectCard";
-import projImg1 from "../assets/img/project-img1.png";
-import projImg2 from "../assets/img/project-img2.png";
-import projImg3 from "../assets/img/project-img3.png";
+import projImg1 from "../assets/img/a.png";
+import projImg2 from "../assets/img/b.png";
+import projImg3 from "../assets/img/c.png";
+import projImg4 from "../assets/img/d.png";
+import projImg5 from "../assets/img/e.png";
+import projImg6 from "../assets/img/f.png";
 import colorSharp2 from "../assets/img/color-sharp2.png";
 import 'animate.css';
 import TrackVisibility from 'react-on-screen';
@@ -11,34 +14,34 @@ const Projects = () => {
 
   const projects = [
     {
-      title: "Business Startup",
-      description: "Design & Development",
+      title: "Tenzies",
+      description: "Game & Desing",
       imgUrl: projImg1,
     },
     {
-      title: "Business Startup",
+      title: "Travel Journey",
       description: "Design & Development",
       imgUrl: projImg2,
     },
     {
-      title: "Business Startup",
+      title: "Air BnB Clone",
       description: "Design & Development",
       imgUrl: projImg3,
     },
     {
-      title: "Business Startup",
+      title: "Meme Generator",
       description: "Design & Development",
-      imgUrl: projImg1,
+      imgUrl: projImg4,
     },
     {
       title: "Business Startup",
       description: "Design & Development",
-      imgUrl: projImg2,
+      imgUrl: projImg5,
     },
     {
       title: "Business Startup",
       description: "Design & Development",
-      imgUrl: projImg3,
+      imgUrl: projImg6,
     },
   ];
 
