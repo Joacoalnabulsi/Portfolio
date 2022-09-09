@@ -17,31 +17,37 @@ const Projects = () => {
       title: "Tenzies",
       description: "Game & Desing",
       imgUrl: projImg1,
+      url: 'https://project1.com'
     },
     {
       title: "Travel Journey",
       description: "Design & Development",
       imgUrl: projImg2,
+      url: 'https://project1.com'
     },
     {
       title: "Air BnB Clone",
       description: "Design & Development",
       imgUrl: projImg3,
+      url: 'https://project1.com'
     },
     {
       title: "Meme Generator",
       description: "Design & Development",
       imgUrl: projImg4,
+      url: 'https://project1.com'
     },
     {
       title: "SpeedTypingGame",
       description: "Game",
       imgUrl: projImg5,
+      url: 'https://project1.com'
     },
     {
       title: "FitnessClubPage",
       description: "Design & Development",
       imgUrl: projImg6,
+      url: 'https://project1.com'
     },
   ];
 
