@@ -17,31 +17,37 @@ const Projects = () => {
       title: "Tenzies",
       description: "Game & Desing",
       imgUrl: projImg1,
+      url: 'https://tenzies-drab.vercel.app/'
     },
     {
       title: "Travel Journey",
       description: "Design & Development",
       imgUrl: projImg2,
+      url: 'https://traveljourney-9va0ghlf5-joacoalnabulsi.vercel.app/'
     },
     {
       title: "Air BnB Clone",
       description: "Design & Development",
       imgUrl: projImg3,
+      url: 'https://airbnbclone-theta.vercel.app/'
     },
     {
       title: "Meme Generator",
       description: "Design & Development",
       imgUrl: projImg4,
+      url:'https://memegenerator-woad.vercel.app/'
     },
     {
       title: "SpeedTypingGame",
       description: "Game",
       imgUrl: projImg5,
+      url:'https://speedgame-joacoalnabulsi.vercel.app/'
     },
     {
       title: "FitnessClubPage",
       description: "Design & Development",
       imgUrl: projImg6,
+      url:'https://gymfitness.vercel.app/'
     },
   ];
 
