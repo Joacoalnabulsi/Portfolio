@@ -60,7 +60,7 @@ const Banner = () => {
                   <p>I'm an Argentinian front-end developer with experience developing websites and web applications, always doing new projects and learning new techs .I'm also a React developer with a strong passion on creating new tools,programs and testing.
 I'm always open to talk and help, if that it's needed and that's why, i consider myself as a team player.</p>
                   
-<HashLink to='#connect'> <button onClick={() => console.log('connect')}>Let’s Connect <ArrowRightCircle size={25} /></button></HashLink>
+<HashLink to='#connect'><button>Let’s Connect <ArrowRightCircle size={25} /></button></HashLink>
               </div>}
             </TrackVisibility>
           </Col>
