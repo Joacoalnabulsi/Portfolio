@@ -4,11 +4,10 @@ import contactImg from "../assets/img/contact-img.svg";
 import "animate.css";
 import TrackVisibility from "react-on-screen";
 
-const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL ||
-  (process.env.NODE_ENV === "development" ? "http://localhost:5000" : "");
-
-const CONTACT_ENDPOINT = `${API_BASE_URL.replace(/\/$/, "")}/contact`;
+const CONTACT_ENDPOINT =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:5000/contact"
+    : "/api/contact";
 
 const Contact = () => {
   const formInitialDetails = {
