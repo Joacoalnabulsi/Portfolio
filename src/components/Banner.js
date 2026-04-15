@@ -10,7 +10,7 @@ const Banner = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [text, setText] = useState('');
   const [delta, setDelta] = useState(300 - Math.random() * 100);
-  const [index, setIndex] = useState(1);
+  const [index, setIndex] = useState(1); // eslint-disable-line no-unused-vars
   const toRotate = [ "Web Developer", "Web Designer", "Front end developer" ];
   const period = 2000;
 
@@ -20,7 +20,7 @@ const Banner = () => {
     }, delta);
 
     return () => { clearInterval(ticker) };
-  }, [text])
+  }, [text]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const tick = () => {
     let i = loopNum % toRotate.length;
