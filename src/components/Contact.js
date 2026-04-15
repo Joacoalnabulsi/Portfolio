@@ -1,15 +1,12 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import emailjs from "@emailjs/browser";
 import contactImg from "../assets/img/contact-img.svg";
 import "animate.css";
 import TrackVisibility from "react-on-screen";
 
-const CONTACT_ENDPOINT =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:5000/contact"
-    : "/api/contact";
-
 const Contact = () => {
+  const formRef = useRef();
   const formInitialDetails = {
     firstName: "",
     lastName: "",
@@ -22,10 +19,7 @@ const Contact = () => {
   const [status, setStatus] = useState({});
 
   const onFormUpdate = (category, value) => {
-    setFormDetails({
-      ...formDetails,
-      [category]: value,
-    });
+    setFormDetails({ ...formDetails, [category]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -33,34 +27,25 @@ const Contact = () => {
     setStatus({});
     setButtonText("Sending...");
 
+    const templateParams = {
+      from_name: `${formDetails.firstName} ${formDetails.lastName}`.trim(),
+      from_email: formDetails.email,
+      phone: formDetails.phone,
+      message: formDetails.message,
+    };
+
     try {
-      const response = await fetch(CONTACT_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify(formDetails),
-      });
-
-      const result = await response.json();
-
-      if (response.ok && result.code === 200) {
-        setStatus({ success: true, message: "Message sent successfully" });
-        setFormDetails(formInitialDetails);
-      } else {
-        throw new Error(result.status || "Unable to send message");
-      }
+      await emailjs.send(
+        process.env.REACT_APP_EMAILJS_SERVICE_ID,
+        process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
+        templateParams,
+        process.env.REACT_APP_EMAILJS_PUBLIC_KEY
+      );
+      setStatus({ success: true, message: "Message sent successfully" });
+      setFormDetails(formInitialDetails);
     } catch (error) {
-      console.error("Error sending contact message", error);
-      const failureMessage =
-        error instanceof Error && error.message && error.message !== "Failed to fetch"
-          ? error.message
-          : "Something went wrong, please try again later.";
-
-      setStatus({
-        success: false,
-        message: failureMessage,
-      });
+      console.error("EmailJS error:", error);
+      setStatus({ success: false, message: "Something went wrong, please try again later." });
     } finally {
       setButtonText("Send");
     }
@@ -86,7 +71,7 @@ const Contact = () => {
               {({ isVisible }) => (
                 <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
                   <h2>Get In Touch</h2>
-                  <form onSubmit={handleSubmit}>
+                  <form ref={formRef} onSubmit={handleSubmit}>
                     <Row>
                       <Col size={12} sm={6} className="px-1">
                         <input
