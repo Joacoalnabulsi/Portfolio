@@ -5,6 +5,9 @@ import contactImg from "../assets/img/contact-img.svg";
 import "animate.css";
 import TrackVisibility from "react-on-screen";
 
+const NAME_REGEX = /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[-' ][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
 const Contact = () => {
   const formRef = useRef();
   const formInitialDetails = {
@@ -16,15 +19,62 @@ const Contact = () => {
   };
   const [formDetails, setFormDetails] = useState(formInitialDetails);
   const [buttonText, setButtonText] = useState("Send");
-  const [status, setStatus] = useState({});
+  const [errors, setErrors] = useState({});
+  const [toast, setToast] = useState(null);
 
   const onFormUpdate = (category, value) => {
     setFormDetails({ ...formDetails, [category]: value });
+    if (errors[category]) {
+      setErrors({ ...errors, [category]: null });
+    }
+  };
+
+  const showToast = (type, message) => {
+    setToast({ type, message });
+    setTimeout(() => setToast(null), 5000);
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    const firstName = formDetails.firstName.trim();
+    const lastName = formDetails.lastName.trim();
+    const email = formDetails.email.trim();
+
+    if (!firstName) {
+      newErrors.firstName = "First name is required";
+    } else if (firstName.length < 2) {
+      newErrors.firstName = "First name must be at least 2 characters";
+    } else if (!NAME_REGEX.test(firstName)) {
+      newErrors.firstName = "Enter a valid first name (letters only)";
+    }
+
+    if (!lastName) {
+      newErrors.lastName = "Last name is required";
+    } else if (lastName.length < 2) {
+      newErrors.lastName = "Last name must be at least 2 characters";
+    } else if (!NAME_REGEX.test(lastName)) {
+      newErrors.lastName = "Enter a valid last name (letters only)";
+    }
+
+    if (!email) {
+      newErrors.email = "Email is required";
+    } else if (!EMAIL_REGEX.test(email)) {
+      newErrors.email = "Enter a valid email address";
+    }
+
+    return newErrors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus({});
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      showToast("error", "Please fix the highlighted fields");
+      return;
+    }
+
+    setErrors({});
     setButtonText("Sending...");
 
     const templateParams = {
@@ -41,11 +91,11 @@ const Contact = () => {
         templateParams,
         process.env.REACT_APP_EMAILJS_PUBLIC_KEY
       );
-      setStatus({ success: true, message: "Message sent successfully" });
+      showToast("success", "Message sent successfully! I'll get back to you soon.");
       setFormDetails(formInitialDetails);
     } catch (error) {
       console.error("EmailJS error:", error);
-      setStatus({ success: false, message: "Something went wrong, please try again later." });
+      showToast("error", "Something went wrong, please try again later.");
     } finally {
       setButtonText("Send");
     }
@@ -71,31 +121,37 @@ const Contact = () => {
               {({ isVisible }) => (
                 <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
                   <h2>Get In Touch</h2>
-                  <form ref={formRef} onSubmit={handleSubmit}>
+                  <form ref={formRef} onSubmit={handleSubmit} noValidate>
                     <Row>
                       <Col size={12} sm={6} className="px-1">
                         <input
                           type="text"
                           value={formDetails.firstName}
-                          placeholder="First Name"
+                          placeholder="First Name *"
+                          className={errors.firstName ? "input-error" : ""}
                           onChange={(e) => onFormUpdate("firstName", e.target.value)}
                         />
+                        {errors.firstName && <span className="field-error">{errors.firstName}</span>}
                       </Col>
                       <Col size={12} sm={6} className="px-1">
                         <input
                           type="text"
                           value={formDetails.lastName}
-                          placeholder="Last Name"
+                          placeholder="Last Name *"
+                          className={errors.lastName ? "input-error" : ""}
                           onChange={(e) => onFormUpdate("lastName", e.target.value)}
                         />
+                        {errors.lastName && <span className="field-error">{errors.lastName}</span>}
                       </Col>
                       <Col size={12} sm={6} className="px-1">
                         <input
                           type="email"
                           value={formDetails.email}
-                          placeholder="Email Address"
+                          placeholder="Email Address *"
+                          className={errors.email ? "input-error" : ""}
                           onChange={(e) => onFormUpdate("email", e.target.value)}
                         />
+                        {errors.email && <span className="field-error">{errors.email}</span>}
                       </Col>
                       <Col size={12} sm={6} className="px-1">
                         <input
@@ -116,13 +172,6 @@ const Contact = () => {
                           <span>{buttonText}</span>
                         </button>
                       </Col>
-                      {status.message && (
-                        <Col>
-                          <p className={status.success === false ? "danger" : "success"}>
-                            {status.message}
-                          </p>
-                        </Col>
-                      )}
                     </Row>
                   </form>
                 </div>
@@ -131,6 +180,22 @@ const Contact = () => {
           </Col>
         </Row>
       </Container>
+      {toast && (
+        <div className={`contact-toast contact-toast-${toast.type}`} role="alert">
+          <div className="contact-toast-icon">
+            {toast.type === "success" ? "✓" : "!"}
+          </div>
+          <div className="contact-toast-message">{toast.message}</div>
+          <button
+            type="button"
+            className="contact-toast-close"
+            onClick={() => setToast(null)}
+            aria-label="Close notification"
+          >
+            ×
+          </button>
+        </div>
+      )}
     </section>
   );
 };

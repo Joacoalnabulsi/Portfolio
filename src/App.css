@@ -81,6 +81,103 @@ p.success {
 p.danger {
 	color: red;
 }
+
+.contact .input-error {
+	border-color: #ff4d6d !important;
+	box-shadow: 0 0 0 2px rgba(255, 77, 109, 0.25);
+}
+
+.contact .field-error {
+	display: block;
+	color: #ff8fa3;
+	font-size: 13px;
+	font-weight: 500;
+	margin: 4px 0 8px 2px;
+	letter-spacing: 0.4px;
+}
+
+.contact-toast {
+	position: fixed;
+	top: 90px;
+	right: 24px;
+	z-index: 9999;
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	min-width: 320px;
+	max-width: 420px;
+	padding: 18px 22px;
+	border-radius: 12px;
+	color: #fff;
+	font-size: 16px;
+	font-weight: 600;
+	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08);
+	backdrop-filter: blur(12px);
+	animation: toastSlideIn 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+
+.contact-toast-success {
+	background: linear-gradient(135deg, #00c853 0%, #00796b 100%);
+}
+
+.contact-toast-error {
+	background: linear-gradient(135deg, #ff416c 0%, #b71540 100%);
+}
+
+.contact-toast-icon {
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.22);
+	font-size: 20px;
+	font-weight: 800;
+}
+
+.contact-toast-message {
+	flex: 1;
+	line-height: 1.35;
+}
+
+.contact-toast-close {
+	flex-shrink: 0;
+	background: transparent;
+	border: none;
+	color: #fff;
+	font-size: 26px;
+	line-height: 1;
+	cursor: pointer;
+	opacity: 0.8;
+	padding: 0 4px;
+}
+
+.contact-toast-close:hover {
+	opacity: 1;
+}
+
+@keyframes toastSlideIn {
+	from {
+		transform: translateX(120%);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+@media (max-width: 576px) {
+	.contact-toast {
+		top: 80px;
+		right: 12px;
+		left: 12px;
+		min-width: 0;
+		max-width: none;
+	}
+}
 /************ Navbar Css ************/
 nav.navbar {
   padding: 18px 0;
